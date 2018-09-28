@@ -5,7 +5,7 @@ void bfs(int M[21][21], int C[4][21]){
 	int cont=0;//conta a quantidade de vertices no vetor de vertices
 	for(int i = 0; i<= 21;c++){//aumenta quanto mais vertices entrarem no vetor
 		for(int h = 0; h <= 21; h++){//percorre as colunas de uma linha e vai adicionando vertices ao vetor
-			if(i = 0){
+			if(i == 0){
 				C[0][0] = 0;
 				C[1][0] = 0;
 				C[2][0] = -1;
@@ -14,13 +14,14 @@ void bfs(int M[21][21], int C[4][21]){
 			int j = C[3][c];
 			if(M[j][h] == 1 && C[2][h] <=0){//verifica se ha uma ligação e se o vertice ligado é no nimimo branco ou cinza
 				M[j][h] = 0;//zera o valor que esta apontando
+				M[h][j] = 0;
 				printf("A\n");
 				//while(C[3][cont] != h)
 					if(C[3][1+cont] == -1){//verifica se o proximo espaço do vetor esta vazio
-						C[0][1+cont] =  C[0][c] + 1;
-						C[1][1+cont] =  C[1][c] + 1;
-						C[2][1+cont] = -1;
 						cont++;
+						C[0][cont] = C[0][c] + 1;
+						C[1][cont] = C[1][c] + 1;
+						C[2][cont] = -1;
 						C[3][cont] = h;
 					}
 					/*
@@ -28,12 +29,12 @@ void bfs(int M[21][21], int C[4][21]){
 						cont++;
 					}*/
 			}else{}
-			if(h = 21){//apos verificas todas as opções torna o vertice preto
+			if(h == 21){//apos verificas todas as opções torna o vertice preto
 				C[2][c] = 1;
 			}
 		}
 
-		i = c+1;
+		i = c;
 	}
 }
 
@@ -73,7 +74,7 @@ int main(){
 	bfs(M, C);
 	puts("Tentativa de printar a tabela de distancia");
 	for(int i=0; i<=21; i++){
-		printf("%d, ", C[0][i]);
+		printf("%d, ", C[3][i]);
 	}
 	puts("");
 
