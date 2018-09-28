@@ -3,46 +3,31 @@
 void bfs(int M[21][21], int C[4][21]){
 	int c=0;//serve para marcar a posição atual no vetor de vertices
 	int cont=0;//conta a quantidade de vertices no vetor de vertices
-	for(int i = 0; i<= 21;c++){//aumenta quanto mais vertices entrarem no vetor
-		for(int h = 0; h <= 21; h++){//percorre as colunas de uma linha e vai adicionando vertices ao vetor
-			if(i == 0){
+	for(; c< 21;c++){//aumenta quanto mais vertices entrarem no vetor
+		for(int h = 0; h < 21; h++){//percorre as colunas de uma linha e vai adicionando vertices ao vetor
+			if(c == 0){
 				C[0][0] = 0;
-				C[1][0] = 0;
 				C[2][0] = -1;
 				C[3][0] = 0;
 			}else{}
 			int j = C[3][c];
-			if(M[j][h] == 1 && C[2][h] <=0){//verifica se ha uma ligação e se o vertice ligado é no nimimo branco ou cinza
-				M[j][h] = 0;//zera o valor que esta apontando
-				M[h][j] = 0;
-				printf("A\n");
-				//while(C[3][cont] != h)
-					if(C[3][1+cont] == -1){//verifica se o proximo espaço do vetor esta vazio
+			if(M[j][h] == 1){//verifica se há uma ligação e se o vertice ligado é no nimimo branco ou cinza
+				
+				if(C[2][h] == 0){//verifica se o vertice é branco pra adicioná-lo no vetor
 						cont++;
-						C[0][cont] = C[0][c] + 1;
-						C[1][cont] = C[1][c] + 1;
-						C[2][cont] = -1;
+						C[0][h] = C[0][c] + 1;
+						C[1][h] = C[3][c];
+						C[2][h] = -1;
 						C[3][cont] = h;
-					}
-					/*
-					}else{
-						cont++;
-					}*/
-			}else{}
-			if(h == 21){//apos verificas todas as opções torna o vertice preto
-				C[2][c] = 1;
+				}
 			}
 		}
-
-		i = c;
+		//apos verificar todas as opções torna o vertice preto
 	}
 }
 
 int main(){	
-	int C[4][21] =  /*d*/{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-				   /*pi*/{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-					/*c*/{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-					/*v*/{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
+	int C[4][21];
 						/*a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  z*/
 	int M[21][21] ={/*a*/{0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 					/*b*/{1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -66,19 +51,47 @@ int main(){
 					/*t*/{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
 					/*z*/{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0}};
 
-	/*for(int i = 0; i<=21; i++){
+	for(int i = 0; i<=21; i++){
+		C[0][i] = 0;
 		C[2][i] = 0;
 		C[3][i] = -1;
-	}*/
+	}
 
 	bfs(M, C);
 	puts("Tentativa de printar a tabela de distancia");
-	for(int i=0; i<=21; i++){
-		printf("%d, ", C[3][i]);
+	printf("Vertice:   A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | Z  ");
+	puts("");
+	printf("Distância: ");
+	for(int i=0; i<21; i++){
+		printf("%d | ", C[0][i]);
 	}
 	puts("");
-
-		
-
-		
+	printf("Anterior:  ");
+	for(int i=0; i<21; i++){
+		if(C[1][i] >= 10)
+			printf("%d| ", C[1][i]);
+		else
+			printf("%d | ", C[1][i]);
+	}
+	puts("");
+	printf("Cor:       ");
+	for(int i=0; i<21; i++){
+		printf("%d| ", C[2][i]);
+	}
+	puts("");
+	printf("Vetor:     ");
+	for(int i=0; i<21; i++){
+		if(C[3][i] >= 10)
+			printf("%d| ", C[3][i]);
+		else
+			printf("%d | ", C[3][i]);
+	}
+	puts("");
+	printf("Menor Caminho: ");
+	for(int i = 20; i != 0; ){
+		printf("%d <- ", i);
+		i = C[1][i];
+	}
+	puts("0");
+	
 	}
